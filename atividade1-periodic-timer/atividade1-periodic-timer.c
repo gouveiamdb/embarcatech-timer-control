@@ -53,8 +53,8 @@ int main() {
     struct repeating_timer timer;
     add_repeating_timer_ms(3000, repeating_timer_callback, NULL, &timer);
 
-    // Liga o LED inicial (Vermelho)
-    gpio_put(LED_VERMELHO, true);
+    // Liga o estado inicial chamando o callback diretamente
+    repeating_timer_callback(NULL);
 
     // Loop principal para outras tarefas
     while (true) {
