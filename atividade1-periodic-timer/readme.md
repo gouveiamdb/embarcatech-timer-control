@@ -65,15 +65,6 @@ A mudança de estados ocorre a cada **3 segundos**, utilizando um **temporizador
 
 ---
 
-## 📹 Demonstração do Projeto
-
-- O vídeo de demonstração exibe:  
-  - A sequência de troca do semáforo.  
-  - O funcionamento do temporizador.  
-  - A saída das mensagens no console serial.
-
----
-
 ## 💻 Autor
 - **Matheus Gouveia de Deus Bastos**
 
