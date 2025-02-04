@@ -65,15 +65,6 @@ Este projeto implementa o controle de três LEDs (azul, vermelho e verde) atrav�
 
 ---
 
-## 📹 Demonstração do Projeto
-
-- O vídeo de demonstração exibe:  
-  - A sequência de acendimento e desligamento dos LEDs.  
-  - O funcionamento do botão para iniciar o processo.  
-  - A saída das mensagens no console serial.
-
----
-
 ## 💻 Autor
 - **Matheus Gouveia de Deus Bastos**
 
