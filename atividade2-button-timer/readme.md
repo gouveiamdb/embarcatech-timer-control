@@ -1,4 +1,4 @@
-re# 🔘 Atividade 2 - Controle de LEDs com Botão
+# 🔘 Atividade 2 - Controle de LEDs com Botão
 
 ## 📚 Descrição do Projeto
 Este projeto implementa o controle de três LEDs (azul, vermelho e verde) através de um **botão**. Quando o botão é pressionado, os LEDs acendem em sequência e apagam de forma programada.
