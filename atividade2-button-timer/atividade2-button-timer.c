@@ -1,16 +1,17 @@
-#include <stdio.h>  
-#include "pico/stdlib.h"     
-#include "hardware/timer.h"   
+#include <stdio.h>
+#include "pico/stdlib.h"
+#include "hardware/timer.h"
 
 // Definição dos pinos
 #define LED_BLUE 11
 #define LED_RED 12
 #define LED_GREEN 13
-#define BUTTON 5  
+#define BUTTON 5
 
 // Variáveis globais
-volatile bool sequence_running = false;  
+volatile bool sequence_running = false;
 
+// Protótipos das funções
 int64_t state_two_callback(alarm_id_t id, void *user_data);
 int64_t state_three_callback(alarm_id_t id, void *user_data);
 int64_t turn_off_callback(alarm_id_t id, void *user_data);
@@ -20,7 +21,7 @@ int64_t state_one_callback(alarm_id_t id, void *user_data) {
     gpio_put(LED_BLUE, 1);
     gpio_put(LED_RED, 1);
     gpio_put(LED_GREEN, 1);
-    printf("[LOG] Estado 1: Todos LEDs acesos.\n");
+    printf("[LOG] Estado 1: Todos os LEDs acesos.\n");
     add_alarm_in_ms(3000, state_two_callback, NULL, false);
     return 0;
 }
@@ -41,11 +42,11 @@ int64_t state_three_callback(alarm_id_t id, void *user_data) {
     return 0;
 }
 
-// Estado final: Apaga o LED verde
+// Estado final: Apaga o LED verde e volta ao estado inicial
 int64_t turn_off_callback(alarm_id_t id, void *user_data) {
     gpio_put(LED_GREEN, 0);
-    sequence_running = false;
-    printf("[LOG] Estado final: Todos LEDs apagados.\n");
+    sequence_running = false; // Permite reiniciar a sequência
+    printf("[LOG] Estado final: Todos os LEDs apagados. Pronto para reiniciar.\n");
     return 0;
 }
 
@@ -53,7 +54,7 @@ int64_t turn_off_callback(alarm_id_t id, void *user_data) {
 void start_sequence() {
     if (!sequence_running) {
         sequence_running = true;
-        add_alarm_in_ms(0, state_one_callback, NULL, false);  // Começa imediatamente
+        state_one_callback(NULL, NULL);  // Inicia diretamente no estado 1
     }
 }
 
@@ -95,6 +96,8 @@ int main() {
     gpio_set_dir(LED_BLUE, GPIO_OUT);
     gpio_set_dir(LED_RED, GPIO_OUT);
     gpio_set_dir(LED_GREEN, GPIO_OUT);
+
+    // Inicializa LEDs apagados
     gpio_put(LED_BLUE, 0);
     gpio_put(LED_RED, 0);
     gpio_put(LED_GREEN, 0);
@@ -102,13 +105,13 @@ int main() {
     // Configuração do botão
     gpio_init(BUTTON);
     gpio_set_dir(BUTTON, GPIO_IN);
-    gpio_pull_up(BUTTON);
+    gpio_pull_up(BUTTON);  // Habilita o pull-up interno do botão (remova se houver conflito)
 
     // Inicializa um temporizador para verificar o botão a cada 100ms
     struct repeating_timer timer;
     add_repeating_timer_ms(100, button_monitor_callback, NULL, &timer);
 
     while (true) {
-        sleep_ms(10);
+        sleep_ms(10);  // Pequeno delay para eficiência
     }
 }
